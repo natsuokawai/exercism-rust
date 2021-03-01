@@ -9,19 +9,6 @@ pub fn verse(n: u32) -> String {
 }
 
 pub fn sing(start: u32, end: u32) -> String {
-    let mut res = String::new();
-    let mut num = start;
-
-    while num >= end {
-        res += &verse(num);
-        if num != end {
-            res += "\n";
-        }
-        if num == 0 {
-            break;
-        }
-        num -= 1;
-    }
-    
-    res
+    (end..=start).into_iter().rev().map(|n| verse(n)).collect::<Vec<_>>().join("\n")
 }
+
