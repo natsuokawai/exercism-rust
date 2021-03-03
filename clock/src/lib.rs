@@ -1,7 +1,15 @@
+use std::fmt;
+
 #[derive(Debug, PartialEq)]
 pub struct Clock {
     hours: i32,
     minutes: i32,
+}
+
+impl fmt::Display for Clock {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "{:02}:{:02}", self.hours, self.minutes)
+    }
 }
 
 const DAY_HOURS: i32 = 24; // hours in one day
@@ -14,10 +22,6 @@ impl Clock {
             hours: hours,
             minutes: minutes,
         }.adjust_rollover()
-    }
-
-    pub fn to_string(&self) -> String {
-        format!("{:02}:{:02}", self.hours, self.minutes)
     }
 
     pub fn add_minutes(&self, minutes: i32) -> Self {
