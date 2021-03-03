@@ -12,8 +12,9 @@ impl PartialEq for Clock {
 
 impl Eq for Clock {}
 
-const DAY_HOURS: i32 = 24;
-const HOUR_MINUTES: i32 = 60;
+const DAY_HOURS: i32 = 24; // hours in one day
+const HOUR_MINUTES: i32 = 60; // minutes in one hour
+const DAY_MINUTES: i32 = DAY_HOURS * HOUR_MINUTES; // minutes in one day
 
 impl Clock {
     pub fn new(hours: i32, minutes: i32) -> Self {
@@ -35,13 +36,13 @@ impl Clock {
     }
 
     fn adjust_rollover(&self) -> Self {
-        let mut hour = self.hours + self.minutes / HOUR_MINUTES;
-        while hour < 0 {
-            hour += DAY_HOURS;
+        let mut total_minutes = self.hours * HOUR_MINUTES + self.minutes;
+        while total_minutes < 0 {
+            total_minutes += DAY_MINUTES;
         }
         Clock {
-            hours: hour % DAY_HOURS,
-            minutes: self.minutes % HOUR_MINUTES,
+            hours: (total_minutes / HOUR_MINUTES) % DAY_HOURS,
+            minutes: total_minutes % HOUR_MINUTES,
         }
     }
 }
