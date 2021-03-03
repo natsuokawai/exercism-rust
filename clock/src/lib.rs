@@ -14,7 +14,6 @@ impl fmt::Display for Clock {
 
 const DAY_HOURS: i32 = 24; // hours in one day
 const HOUR_MINUTES: i32 = 60; // minutes in one hour
-const DAY_MINUTES: i32 = DAY_HOURS * HOUR_MINUTES; // minutes in one day
 
 impl Clock {
     pub fn new(hours: i32, minutes: i32) -> Self {
@@ -32,13 +31,10 @@ impl Clock {
     }
 
     fn adjust_rollover(&self) -> Self {
-        let mut total_minutes = self.hours * HOUR_MINUTES + self.minutes;
-        while total_minutes < 0 {
-            total_minutes += DAY_MINUTES;
-        }
+        let total_minutes = self.hours * HOUR_MINUTES + self.minutes;
         Clock {
-            hours: (total_minutes / HOUR_MINUTES) % DAY_HOURS,
-            minutes: total_minutes % HOUR_MINUTES,
+            hours: (total_minutes.div_euclid(HOUR_MINUTES)).rem_euclid(DAY_HOURS),
+            minutes: total_minutes.rem_euclid(HOUR_MINUTES),
         }
     }
 }
