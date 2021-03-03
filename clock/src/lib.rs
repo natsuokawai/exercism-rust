@@ -35,8 +35,12 @@ impl Clock {
     }
 
     fn adjust_rollover(&self) -> Self {
+        let mut hour = self.hours + self.minutes / HOUR_MINUTES;
+        while hour < 0 {
+            hour += DAY_HOURS;
+        }
         Clock {
-            hours: (self.hours + self.minutes / HOUR_MINUTES) % DAY_HOURS,
+            hours: hour % DAY_HOURS,
             minutes: self.minutes % HOUR_MINUTES,
         }
     }
