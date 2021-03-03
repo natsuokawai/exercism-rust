@@ -1,16 +1,8 @@
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub struct Clock {
     hours: i32,
     minutes: i32,
 }
-
-impl PartialEq for Clock {
-    fn eq(&self, other: &Self) -> bool {
-        self.hours == other.hours && self.minutes == other.minutes
-    }
-}
-
-impl Eq for Clock {}
 
 const DAY_HOURS: i32 = 24; // hours in one day
 const HOUR_MINUTES: i32 = 60; // minutes in one hour
