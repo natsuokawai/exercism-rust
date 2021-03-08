@@ -3,16 +3,12 @@ pub fn build_proverb(list: &[&str]) -> String {
         return String::new();
     }
 
-    let mut res = String::new();
-    let last = list.len() - 1;
-
-    for i in 0..=last {
-        if i != last {
-            res += &format!("For want of a {} the {} was lost.\n", list[i], list[i + 1]);
-        } else {
-            res += &format!("And all for the want of a {}.", list[0]);
-        }
-    }
-
-    res
+    list.windows(2)
+        .map(|w| format!("For want of a {} the {} was lost.", w[0], w[1]))
+        .chain(std::iter::once(format!(
+            "And all for the want of a {}.",
+            list[0]
+        )))
+        .collect::<Vec<_>>()
+        .join("\n")
 }
