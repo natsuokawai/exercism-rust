@@ -8,9 +8,7 @@ pub struct Duration {
 
 impl From<u64> for Duration {
     fn from(s: u64) -> Self {
-        Duration {
-            seconds: s as f64
-        }
+        Duration { seconds: s as f64 }
     }
 }
 
@@ -69,4 +67,3 @@ impl Planet for Neptune {
         (d.seconds / ONE_EARTH_SECONDS) / 164.79132
     }
 }
-
