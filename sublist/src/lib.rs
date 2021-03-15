@@ -10,27 +10,19 @@ pub fn sublist<T: PartialEq>(_first_list: &[T], _second_list: &[T]) -> Compariso
     if _first_list == _second_list {
         return Comparison::Equal;
     }
-
-    let f_len = _first_list.len();
-    let s_len = _second_list.len();
-
-    if f_len == 0
-        || (f_len < s_len
-            && _second_list
-                .windows(f_len)
-                .any(|w_list| w_list == _first_list))
-    {
+    if contain(_first_list, _second_list) {
+        return Comparison::Superlist;
+    }
+    if contain(_second_list, _first_list) {
         return Comparison::Sublist;
     }
 
-    if s_len == 0
-        || (f_len > s_len
-            && _first_list
-                .windows(s_len)
-                .any(|w_list| w_list == _second_list))
-    {
-        return Comparison::Superlist;
-    }
-
     Comparison::Unequal
+}
+
+// return true if sjb ⊇ obj
+fn contain<T: PartialEq>(sbj: &[T], obj: &[T]) -> bool {
+    let s_len = sbj.len();
+    let o_len = obj.len();
+    o_len == 0 || (s_len > o_len && sbj.windows(o_len).any(|w| w == obj))
 }
