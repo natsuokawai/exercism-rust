@@ -18,14 +18,15 @@ pub fn annotate(minefield: &[&str]) -> Vec<String> {
                 continue;
             }
 
+            // count mines around empty square
             let mut count = 0;
-            let r_start = cmp::max(0, (row as i32) - 1) as usize;
-            let r_end = cmp::min((row + 1) as i32, (row_len - 1) as i32) as usize;
+            let r_start = cmp::max(0, (row as i32) - 1);
+            let r_end = cmp::min((row + 1) as i32, (row_len - 1) as i32);
             for r in r_start..=r_end {
-                let c_start = cmp::max(0, (col as i32) - 1) as usize;
-                let c_end = cmp::min((col + 1) as i32, (col_len - 1) as i32) as usize;
+                let c_start = cmp::max(0, (col as i32) - 1);
+                let c_end = cmp::min((col + 1) as i32, (col_len - 1) as i32);
                 for c in c_start..=c_end {
-                    if minefield[r].chars().nth(c).unwrap() == '*' {
+                    if minefield[r as usize].chars().nth(c as usize).unwrap() == '*' {
                         count += 1;
                     }
                 }
